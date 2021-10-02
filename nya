@@ -1,0 +1,53 @@
+#include <Servo.h>
+Servo servo1y2;
+Servo servo3y4;
+
+int pinS1 = 8;  //pin señal a servo 1 y 2
+int pinS2 = 9;  //servo 3 y 4
+int angulo1 = 0;
+int angulo2 = 0;
+int pinP1 = 7;  // lectura pulsador 1
+int pinP2 = 6;  //pulsador 2
+
+void setup() {
+  
+  servo1y2.attach(pinS1);
+  servo3y4.attach(pinS2);
+  pinMode(pinP1, INPUT);
+  pinMode(pinP2, INPUT);
+  Serial.begin(9600);
+  servo1y2.write(0);
+  servo3y4.write(0);
+}
+
+void loop() {
+
+  if((digitalRead(pinP1) == 0) and (digitalRead(pinP2)==1)){
+    for (angulo1 >= 2; angulo1<=180; angulo1 +=1) {
+      servo1y2.write(angulo1);
+      delay(20);
+    }
+    if(angulo1 =180) {
+      for (angulo2 = 0; angulo2 <=180; angulo2 +=1) {
+        servo3y4.write(angulo2);
+        delay(20);
+      }
+    }
+  }
+
+ if((digitalRead(pinP2) == 0) and (digitalRead(pinP1)==1)) {
+  for (angulo2 = 180; angulo2>=0; angulo2 -=1) {
+    servo3y4.write(angulo2);
+    delay(20);
+  }
+   if(angulo2<=10){
+    for (angulo1 = 180; angulo1>=0; angulo1 -=1) {
+    servo1y2.write(angulo1);
+    delay(20);
+  }
+ }
+ }
+
+
+delay(300);
+}
